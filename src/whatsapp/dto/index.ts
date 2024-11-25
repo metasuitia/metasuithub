@@ -1,1 +1,1 @@
-export * from "./webhook-whatsapp-message"
+export * from "./webhook-whatsapp-message.dto"

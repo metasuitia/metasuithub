@@ -2,14 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { InstagramService } from './instagram.service';
 import { CreateInstagramDto } from './dto/create-instagram.dto';
 import { UpdateInstagramDto } from './dto/update-instagram.dto';
+import { webhookMessageInstagramDto } from './dto';
 
 @Controller('instagram')
 export class InstagramController {
   constructor(private readonly instagramService: InstagramService) {}
 
   @Post("/webhook")
-  webhook(@Body() createInstagramDto: CreateInstagramDto) {
-    return this.instagramService.webhook(createInstagramDto);
+  webhook(@Body() webhookMessageInstagramDto: webhookMessageInstagramDto) {
+    return this.instagramService.webhook(webhookMessageInstagramDto);
   }
 
   @Get()

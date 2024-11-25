@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInstagramDto } from './dto/create-instagram.dto';
 import { UpdateInstagramDto } from './dto/update-instagram.dto';
+import { webhookMessageInstagramDto } from './dto';
 
 @Injectable()
 export class InstagramService {
-  webhook(createInstagramDto: CreateInstagramDto) {
+  webhook(webhookMessageInstagramDto:  webhookMessageInstagramDto) {
     return 'aqui esta el webhook de instagram';
   }
 
