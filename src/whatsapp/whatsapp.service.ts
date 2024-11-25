@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateWhatsappDto } from './dto/create-whatsapp.dto';
 import { UpdateWhatsappDto } from './dto/update-whatsapp.dto';
+import { webhookMessageWhatsappDto } from './dto';
 
 @Injectable()
 export class WhatsappService {
-  webhook(createWhatsappDto: CreateWhatsappDto) {
+  webhook(webhookMessageWhatsappDto: webhookMessageWhatsappDto) {
 
     // aqui va la logica para crear el webhook
+    //usara la clase para validar y filtrar los mensajes
     return 'aqui esta el nuevo webhook de whatsapp';
   }
 
