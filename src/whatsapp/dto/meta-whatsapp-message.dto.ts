@@ -16,7 +16,7 @@ export class Entry {
 }
 
 export class Change {
-    @IsObject()
+    
     value: Value;
     @IsString()
     field: string;
@@ -25,7 +25,7 @@ export class Change {
 export class Value {
     @IsString()
     messaging_product: string;
-    @IsObject()
+   
     metadata:          Metadata;
     @IsObject()
     contacts:          Contact[];
@@ -34,7 +34,7 @@ export class Value {
 }
 
 export class Contact {
-    @IsObject()
+
     profile: Profile;
     @IsString()
     wa_id:   string;
@@ -52,7 +52,7 @@ export class Message {
     id:        string;
     @IsString()
     timestamp: string;
-    @IsObject()
+  
     text:      Text;
     @IsString()
     type:      string;
