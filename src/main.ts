@@ -10,7 +10,7 @@ async function bootstrap() {
   //restfull api
   const app = await NestFactory.create(AppModule,{
     rawBody: true,cors:true
-  });
+  }); 
   
   app.setGlobalPrefix('hub');
 
