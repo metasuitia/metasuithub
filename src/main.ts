@@ -34,6 +34,6 @@ async function bootstrap() {
 
   await app.listen(envs.port);
 
-  logger.log(`Bot escuchando en el puerto ${envs.port}`);
+  logger.log(`HUb de metasuit escuchando en el puerto ${envs.port}`);
 }
 bootstrap();

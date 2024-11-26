@@ -31,7 +31,7 @@ export class WhatsappService {
     const challenge = req["hub.challenge"];
   
     if (mode === "subscribe" && token === envs.whatsappWebhookVerifyToken) {
-     
+     console.log('webhook verificado');
      return challenge
      
     } else {
