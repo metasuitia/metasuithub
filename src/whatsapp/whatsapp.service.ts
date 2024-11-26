@@ -12,13 +12,12 @@ export class WhatsappService {
   constructor(
     @Inject(NATS_SERVICE) private readonly client: ClientProxy
   ) {}
-  webhook(req:MetaWhatsappMessageDTO  , res):any {
-  const{
-    object,
-    entry
-  } = req
-
-  console.log(entry);
+  webhook(req:any ):any {
+  
+  const metaWhatsappMessageDTO= new MetaWhatsappMessageDTO()
+    metaWhatsappMessageDTO.object=req.object
+    metaWhatsappMessageDTO.entry=req.entry
+    
     // aqui va la logica para crear el webhook
     // usara la clase para validar y filtrar los mensajes
     return 'aqui esta el nuevo webhook de whatsapp';
