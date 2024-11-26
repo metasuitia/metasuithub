@@ -5,14 +5,14 @@ import { envs } from './config/envs';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const logger =new Logger('Bot de metasuit');
+  const logger =new Logger('Hub de metasuit');
 
   //restfull api
   const app = await NestFactory.create(AppModule,{
     rawBody: true,cors:true
   });
   
-  app.setGlobalPrefix('bot');
+  app.setGlobalPrefix('hub');
 
   app.useGlobalPipes(
     new ValidationPipe({
