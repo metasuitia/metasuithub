@@ -23,7 +23,11 @@ export class WhatsappService {
 
   const handler = new WhatsappMessageHandler(messages[0] );
   
- 
+   if (!handler.isworkingHours()) {
+    
+     return 'no es hora de responder'
+   }
+
     // aqui va la logica para crear el webhook
     // usara la clase para validar y filtrar los mensajes
     return handler.sendMessage();

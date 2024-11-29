@@ -1,3 +1,4 @@
+import { WorkingHours } from "src/functions";
 import { Message } from "src/whatsapp/dto";
 
 export class WhatsappMessageHandler{
@@ -12,6 +13,13 @@ export class WhatsappMessageHandler{
     constructor(
         private readonly whatsappMessage: Message 
     ){}
+
+    isworkingHours(){
+        //aqui ira la  logica de si estamos en horario 
+       return WorkingHours()
+       
+        
+    }
 
     sendMessage(){
         return(`mensaje de ${this.whatsappMessage.from} de tipo ${this.whatsappMessage.type}`);
