@@ -9,10 +9,10 @@ export class WhatsappController {
   constructor(private readonly whatsappService: WhatsappService) {}
 
   @Post("/webhook")
-  webhook(@Body() req:Request ,res:Response) {
+  webhook(@Body() req:MetaWhatsappMessageDTO ,res:Response) {
     console.log("mensaje recibido");
     const response = this.whatsappService.webhook(req);
-    return response //response
+    return response 
   }
 
   @Get("/webhook")
