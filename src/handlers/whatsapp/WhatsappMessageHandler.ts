@@ -1,28 +1,38 @@
+import { Inject, Injectable } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+import { NATS_SERVICE } from "src/config/services";
 import { WorkingHours } from "src/functions";
 import { Message } from "src/whatsapp/dto";
 
+@Injectable()
 export class WhatsappMessageHandler{
 
     //TODO: esta clase se encarga de mirar si estamos en horas laborales
     //TODO: se encargara de filtrar los mensajes
     //TODO: se encargara de responder mensajes basicos
     //TODO: se encargara de la comunicacion con nast
-
     //pasemosle el  array de mensajes y que de aqui el mire las horas 
     //y que tipo de mensaje es
+    @Inject(NATS_SERVICE) private readonly client: ClientProxy
     constructor(
+        
         private readonly whatsappMessage: Message 
     ){}
 
     isworkingHours(){
         //aqui ira la  logica de si estamos en horario 
-       return WorkingHours()
-       
+        if (WorkingHours()) {
+            console.log(`se enviara el evento al nast ${this.whatsappMessage}`);
+            this.client.emit('whatsapp.message', this.whatsappMessage);
+            return true;
+        }
+        return false;
         
     }
 
     sendMessage(){
         return(`mensaje de ${this.whatsappMessage.from} de tipo ${this.whatsappMessage.type}`);
     }
+
     
 }
