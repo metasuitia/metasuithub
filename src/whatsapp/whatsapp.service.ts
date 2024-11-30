@@ -21,7 +21,7 @@ export class WhatsappService {
   const { value } = changes[0];
   const { messages } = value;
 
-  const handler = new WhatsappMessageHandler(messages[0], );
+  const handler = new WhatsappMessageHandler(messages[0],this.client );
   
    if (!handler.isworkingHours()) {
     
