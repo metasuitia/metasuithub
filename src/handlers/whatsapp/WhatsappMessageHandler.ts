@@ -33,13 +33,16 @@ export class WhatsappMessageHandler{
     }
 
     sendMessage(){
+        this.sendEvent();
         return(`mensaje de ${this.whatsappMessage.from} de tipo ${this.whatsappMessage.type}`);
     }
 
     sendEvent() {
          if (this.client) { 
             // Asegurarse de que 'client' está definido
-             return this.client.emit('whatsapp.message', this.whatsappMessage); } else { console.error('ClientProxy no está definido'); return 'Error: ClientProxy no está definido'; } }
+             return this.client.emit('whatsapp.message', this.whatsappMessage); 
+            } else { console.error('ClientProxy no está definido');
+                 return 'Error: ClientProxy no está definido'; } }
 
     
 }
