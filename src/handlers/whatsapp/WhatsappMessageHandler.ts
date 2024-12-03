@@ -34,7 +34,7 @@ export class WhatsappMessageHandler{
         switch (type) {
             case 'text':
                 //TODO: se encargara de clasificar el mensaje 
-             
+              //TODO: arreglar la funcion que no sirve
              const filteredMessage = getMessageType(whatsappMessage);
                 
                 this.sendEvent({
