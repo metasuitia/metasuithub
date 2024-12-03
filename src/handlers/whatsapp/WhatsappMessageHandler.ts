@@ -3,6 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { envs } from "src/config/envs";
 
 import { WorkingHours } from "src/functions";
+import { getMessageType } from "src/functions/classifyMessageType";
 import { Message } from "src/whatsapp/dto";
 import { agent } from "supertest";
 
@@ -32,20 +33,8 @@ export class WhatsappMessageHandler{
         const{ type } = whatsappMessage
         switch (type) {
             case 'text':
-                //TODO: se encargara de clasificar el mensaje 
-             
-                const newfilteredMessage = {
-                    to: envs.bot_number,
-                    from: whatsappMessage.from,
-                    type: 'text',
-                    text: {
-                        body: whatsappMessage.text.body
-                    },
-                    agenttype: 1, //este sera al agente que le llegara el mensaje
-
-                }
-                
-                this.sendEvent(newfilteredMessage);
+                //TODO: se encargara de clasificar el mensaje  
+                this.sendEvent(getMessageType(whatsappMessage));
                 console.log("Evento enviado")
                 //Todo: usara el isWorking hours
                 break;
