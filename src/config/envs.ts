@@ -5,12 +5,14 @@ interface EnvConfig {
     PORT: number;
     NATS_SERVERS: string[];
     WHATSAPP_WEBHOOK_VERIFY_TOKEN: string;
+    WHATSAPP_BOT_NUMBER: string
 }
 
 const envVarsSchema = joi.object({
     PORT: joi.number().required(),
     NATS_SERVERS: joi.array().items( joi.string() ).required(),
     WHATSAPP_WEBHOOK_VERIFY_TOKEN: joi.string().required(),
+    WHATSAPP_BOT_NUMBER: joi.string().required(),
 })
 .unknown(true);
 
@@ -27,5 +29,6 @@ const envVars: EnvConfig = value;
 export const envs={
 port: envVars.PORT,
 natsServers: envVars.NATS_SERVERS,
-whatsappWebhookVerifyToken: envVars.WHATSAPP_WEBHOOK_VERIFY_TOKEN
+whatsappWebhookVerifyToken: envVars.WHATSAPP_WEBHOOK_VERIFY_TOKEN,
+bot_number: envVars.WHATSAPP_BOT_NUMBER,
 }

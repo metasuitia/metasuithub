@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { envs } from "src/config/envs";
 
 import { WorkingHours } from "src/functions";
 import { Message } from "src/whatsapp/dto";
+import { agent } from "supertest";
 
 @Injectable()
 export class WhatsappMessageHandler{
@@ -25,6 +27,59 @@ export class WhatsappMessageHandler{
        
     }
 
+    ClassifyMessage(whatsappMessage: Message){
+
+        const{ type } = whatsappMessage
+        switch (type) {
+            case 'text':
+                //TODO: se encargara de clasificar el mensaje 
+             
+                const newfilteredMessage = {
+                    to: envs.bot_number,
+                    from: whatsappMessage.from,
+                    type: 'text',
+                    text: {
+                        body: whatsappMessage.text.body
+                    },
+                    agenttype: 1, //este sera al agente que le llegara el mensaje
+
+                }
+                
+                this.sendEvent(newfilteredMessage);
+                console.log("Evento enviado")
+                //Todo: usara el isWorking hours
+                break;
+            case 'image':
+                //TODO: se encargara de clasificar el mensaje 
+                //Todo: usara el isWorking hours
+                break;
+            case 'audio':
+                //TODO: se encargara de clasificar el mensaje 
+                //Todo: usara el isWorking hours
+                break;
+            case 'video':
+                //TODO: se encargara de clasificar el mensaje
+                //Todo: usara el isWorking hours
+                break;
+            case 'document':
+                //TODO: se encargara de clasificar el mensaje 
+                //Todo: usara el isWorking hours
+                break;
+            case 'sticker':
+                //TODO: se encargara de clasificar el mensaje 
+                //Todo: usara el isWorking hours
+                break;
+            case 'reaction':
+                //TODO: se encargara de clasificar el mensaje 
+                //Todo: usara el isWorking hours
+                break;
+           
+        }
+
+        //Todo: se encargara de clasificar el mensaje 
+        //Todo: usara el isWorking hours
+    }
+
     isworkingHours(){
         //aqui ira la  logica de si estamos en horario 
         if (WorkingHours()) {
@@ -38,14 +93,14 @@ export class WhatsappMessageHandler{
     }
 
     sendMessage(){
-        this.sendEvent();
+        
         return(`mensaje de ${this.whatsappMessage.from} de tipo ${this.whatsappMessage.type}`);
     }
 
-    sendEvent() {
+    sendEvent(newfilteredMessage: any) {
          if (this.client) { 
             // Asegurarse de que 'client' está definido
-             return this.client.emit('whatsapp.message', this.whatsappMessage); 
+             return this.client.emit('whatsapp.message', newfilteredMessage); 
             } else { console.error('ClientProxy no está definido');
                  return 'Error: ClientProxy no está definido'; } }
 

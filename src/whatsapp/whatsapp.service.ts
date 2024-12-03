@@ -22,15 +22,13 @@ export class WhatsappService {
   const { messages } = value;
 
   const handler = new WhatsappMessageHandler(messages[0],this.client );
+
+  //TODO: primero ver que tipo de mensaje es
   
-   if (!handler.isworkingHours()) {
-    
-     return 'no es hora de responder'
-   }
-   
+  handler.ClassifyMessage(messages[0]);
     // aqui va la logica para crear el webhook
     // usara la clase para validar y filtrar los mensajes
-    return handler.sendMessage();
+    return 'ok';
   }
 
   hooked(req:Request,res:Response) {
