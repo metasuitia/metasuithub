@@ -33,8 +33,14 @@ export class WhatsappMessageHandler{
         const{ type } = whatsappMessage
         switch (type) {
             case 'text':
-                //TODO: se encargara de clasificar el mensaje  
-                this.sendEvent(getMessageType(whatsappMessage));
+                //TODO: se encargara de clasificar el mensaje 
+             
+             const filteredMessage = getMessageType(whatsappMessage);
+                
+                this.sendEvent({
+                    ...whatsappMessage,
+                    agentType: filteredMessage
+                });
                 console.log("Evento enviado")
                 //Todo: usara el isWorking hours
                 break;

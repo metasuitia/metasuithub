@@ -4,12 +4,12 @@ import { Message } from "src/whatsapp/dto";
 
 
 
-export function getMessageType(message: Message){
+export  async function  getMessageType(message: Message){
   switch (true) {
     case !!message.text:
-    const filtrado = findMenu(message.text.body);
+    const filtrado =  findMenu(message.text.body);
     
-      return {message, filtrado};
+      return  filtrado;
     case !!message.image:
       return 'image';
     case !!message.video:
@@ -37,7 +37,7 @@ const findMenu = (message: string) => {
     const numeroCategoria = Object.keys(keywords).indexOf(categoriaEncontrada) + 1;
     return `${numeroCategoria}`;
   } else {
-    return null;
+    return  null; ;
   }
 };
 
