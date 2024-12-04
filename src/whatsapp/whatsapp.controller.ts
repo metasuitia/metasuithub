@@ -31,14 +31,6 @@ export class WhatsappController {
   findOne(@Param('id') id: string) {
     return this.whatsappService.findOne(+id);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWhatsappDto: UpdateWhatsappDto) {
-    return this.whatsappService.update(+id, updateWhatsappDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.whatsappService.remove(+id);
-  }
+  
+ 
 }
