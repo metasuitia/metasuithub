@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { get } from "http";
 import { WorkingHours } from "src/functions";
 import { getMessageType } from "src/functions/classifyMessageType";
 import { Message } from "src/whatsapp/dto";
