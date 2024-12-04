@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { envs } from "src/config/envs";
-
+import { get } from "http";
 import { WorkingHours } from "src/functions";
 import { getMessageType } from "src/functions/classifyMessageType";
 import { Message } from "src/whatsapp/dto";
-import { agent } from "supertest";
+
 
 @Injectable()
 export class WhatsappMessageHandler{
@@ -36,7 +35,7 @@ export class WhatsappMessageHandler{
                 //TODO: se encargara de clasificar el mensaje 
               //TODO: arreglar la funcion que no sirve
              const filteredMessage = getMessageType(whatsappMessage);
-                
+                console.log(filteredMessage);
                 this.sendEvent({
                     ...whatsappMessage,
                     agentType: filteredMessage
@@ -45,27 +44,51 @@ export class WhatsappMessageHandler{
                 //Todo: usara el isWorking hours
                 break;
             case 'image':
-                //TODO: se encargara de clasificar el mensaje 
+               let filteredImage= getMessageType(whatsappMessage);
+               this.sendEvent({
+                ...whatsappMessage,
+                agentType: filteredImage
+            });
                 //Todo: usara el isWorking hours
                 break;
             case 'audio':
-                //TODO: se encargara de clasificar el mensaje 
+              let filteredAudio= getMessageType(whatsappMessage);
+              this.sendEvent({
+                ...whatsappMessage,
+                agentType: filteredAudio
+            });
                 //Todo: usara el isWorking hours
                 break;
             case 'video':
-                //TODO: se encargara de clasificar el mensaje
+               let filteredVideo= getMessageType(whatsappMessage);
+               this.sendEvent({
+                ...whatsappMessage,
+                agentType: filteredVideo
+            });
                 //Todo: usara el isWorking hours
                 break;
             case 'document':
-                //TODO: se encargara de clasificar el mensaje 
+             let filteredDocument=   getMessageType(whatsappMessage);
+                this.sendEvent({
+                    ...whatsappMessage,
+                    agentType: filteredDocument
+                });
                 //Todo: usara el isWorking hours
                 break;
             case 'sticker':
-                //TODO: se encargara de clasificar el mensaje 
+               let filteredSticker= getMessageType(whatsappMessage);
+               this.sendEvent({
+                ...whatsappMessage,
+                agentType: filteredSticker
+            });
                 //Todo: usara el isWorking hours
                 break;
             case 'reaction':
-                //TODO: se encargara de clasificar el mensaje 
+                let filteredReaction= getMessageType(whatsappMessage);
+                this.sendEvent({
+                    ...whatsappMessage,
+                    agentType: filteredReaction
+                });
                 //Todo: usara el isWorking hours
                 break;
            
