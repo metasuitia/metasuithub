@@ -16,8 +16,8 @@ export class WhatsappMessageHandler{
     lo envio a otro lado
     *********************************************************************/
     constructor(
-        private readonly whatsappMessage: Message, 
         
+        private readonly whatsappMessage: Message, 
         private readonly client: ClientProxy
     ){
        
