@@ -8,17 +8,14 @@ import { Message } from "src/whatsapp/dto";
 
 @Injectable()
 export class WhatsappMessageHandler{
- 
-    //TODO: se encargara de filtrar los mensajes
-    //pasemosle el  array de mensajes y que de aqui el mire las horas 
-    //y que tipo de mensaje es
-
-    //TODO: si no estamos en horas laborales igual enviara a nats 
-    //1 se categorizara el mensaje 
-    //2 se envia a nats
-    //3 si el bot puede contestar algo facil lo hara se guardara
-    //4 el hub es el sitio donde se envian mensajes asi que este respondera
-    
+    /********************************************************************* 
+    Esta clase se encarga de filtrar y clasificar los mensajes
+    es como el que resibe los mensajes los observa y los coloca en el 
+    lugar que corresponde incluso mira la hora y segun eso lo envia a un 
+    lado u otro, separe todo tipo de mensaje por que aun no he decidio
+    si lo envio todo al storage o dependiendo de que cosa
+    lo envio a otro lado
+    *********************************************************************/
     constructor(
         private readonly whatsappMessage: Message, 
         
@@ -32,95 +29,67 @@ export class WhatsappMessageHandler{
         const{ type } = whatsappMessage
         switch (type) {
             case 'text':
-                //TODO: se encargara de clasificar el mensaje 
-              //TODO: arreglar la funcion que no sirve
              const filteredMessage = getMessageType(whatsappMessage);
                 console.log(filteredMessage);
-                this.sendEvent({
+                this.messageScheduler({
                     ...whatsappMessage,
                     agentType: filteredMessage
                 });
-                console.log("Evento enviado")
-                //Todo: usara el isWorking hours
                 break;
             case 'image':
                let filteredImage= getMessageType(whatsappMessage);
-               this.sendEvent({
+               this.messageScheduler({
                 ...whatsappMessage,
                 agentType: filteredImage
             });
-                //Todo: usara el isWorking hours
                 break;
             case 'audio':
               let filteredAudio= getMessageType(whatsappMessage);
-              this.sendEvent({
+              this.messageScheduler({
                 ...whatsappMessage,
                 agentType: filteredAudio
             });
-                //Todo: usara el isWorking hours
                 break;
             case 'video':
                let filteredVideo= getMessageType(whatsappMessage);
-               this.sendEvent({
+               this.messageScheduler({
                 ...whatsappMessage,
                 agentType: filteredVideo
             });
-                //Todo: usara el isWorking hours
                 break;
             case 'document':
              let filteredDocument=   getMessageType(whatsappMessage);
-                this.sendEvent({
+                this.messageScheduler({
                     ...whatsappMessage,
                     agentType: filteredDocument
                 });
-                //Todo: usara el isWorking hours
                 break;
             case 'sticker':
                let filteredSticker= getMessageType(whatsappMessage);
-               this.sendEvent({
+               this.messageScheduler({
                 ...whatsappMessage,
                 agentType: filteredSticker
             });
-                //Todo: usara el isWorking hours
                 break;
             case 'reaction':
                 let filteredReaction= getMessageType(whatsappMessage);
-                this.sendEvent({
+                this.messageScheduler({
                     ...whatsappMessage,
                     agentType: filteredReaction
                 });
-                //Todo: usara el isWorking hours
                 break;
-           
         }
-
-        //Todo: se encargara de clasificar el mensaje 
-        //Todo: usara el isWorking hours
     }
 
-    isworkingHours(){
-        //aqui ira la  logica de si estamos en horario 
-        if (WorkingHours()) {
-            
-            console.log(`se enviara el evento al nast ${this.whatsappMessage}`);
-            
-            return true;
-        }
-        return false;
-        
-    }
-
-    sendMessage(){
-        
-        return(`mensaje de ${this.whatsappMessage.from} de tipo ${this.whatsappMessage.type}`);
-    }
-
-    sendEvent(newfilteredMessage: any) {
+    messageScheduler(newfilteredMessage: any) {
          if (this.client) { 
-            // Asegurarse de que 'client' está definido
-             return this.client.emit('whatsapp.message', newfilteredMessage); 
-            } else { console.error('ClientProxy no está definido');
-                 return 'Error: ClientProxy no está definido'; } }
+            if (WorkingHours){
+                return this.client.emit('whatsapp.eventMessage', newfilteredMessage)}
+            else
+                return this.client.send('whatsapp.sendMessage', newfilteredMessage)
+         }
+         else { console.error('ClientProxy no está definido');
+                return 'Error: ClientProxy no está definido'; } }
 
     
 }
