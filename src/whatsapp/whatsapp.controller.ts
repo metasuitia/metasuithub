@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { WhatsappService } from './whatsapp.service';
 import { Request, Response } from "express";
-import { UpdateWhatsappDto } from './dto/update-whatsapp.dto';
-import { MetaWhatsappMessageDTO, webhookMessageWhatsappDto } from './dto';
+import { MetaWhatsappMessageDTO } from './dto';
 
 @Controller('whatsapp')
 export class WhatsappController {
@@ -23,10 +22,8 @@ export class WhatsappController {
   @Get("/webhook")
   gethook(@Query() req:Request,res:Response) {
     const response =this.whatsappService.hooked(req,res)
-    return response
-    
+    return response 
   }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.whatsappService.findOne(+id);
