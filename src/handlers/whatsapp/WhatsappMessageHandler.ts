@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { WorkingHours } from "src/functions";
 import { getMessageType } from "src/functions/classifyMessageType";
@@ -23,16 +23,15 @@ export class WhatsappMessageHandler{
         private readonly client: ClientProxy
 
     ){
-       
+       const logger = new Logger('WhatsappMessageHandler');
     }
-
+    
     ClassifyMessage(whatsappMessage: Message){
 
         const{ type } = whatsappMessage
         switch (type) {
             case 'text':
              const filteredMessage = getMessageType(whatsappMessage);
-                console.log(filteredMessage);
                 this.messageScheduler({
                     ...whatsappMessage,
                     to: this.to,
@@ -104,8 +103,8 @@ export class WhatsappMessageHandler{
             else
                 return this.client.send('whatsapp.sendMessage', newfilteredMessage)
          }
-         else { console.error('ClientProxy no está definido');
-                return 'Error: ClientProxy no está definido'; } }
-
-    
+         else { 
+            Logger.log('ClientProxy del handler de whatsapp no definido');
+                return 'Error: ClientProxy no está definido'; } 
+            }    
 }

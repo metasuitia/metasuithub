@@ -14,7 +14,6 @@ export class WhatsappController {
 
   @Post("/webhook")
   webhook(@Body() req:MetaWhatsappMessageDTO ,res:Response) {
-    console.log("mensaje recibido");
     const response = this.whatsappService.webhook(req);
     return response 
   }
