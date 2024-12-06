@@ -17,8 +17,11 @@ export class WhatsappMessageHandler{
     *********************************************************************/
     constructor(
         
-        private readonly whatsappMessage: Message, 
+        private readonly whatsappMessage: Message,
+        private readonly to: string,
+        private readonly name: string, 
         private readonly client: ClientProxy
+
     ){
        
     }
@@ -32,6 +35,8 @@ export class WhatsappMessageHandler{
                 console.log(filteredMessage);
                 this.messageScheduler({
                     ...whatsappMessage,
+                    to: this.to,
+                    name: this.name,
                     agentType: filteredMessage
                 });
                 break;
@@ -39,6 +44,8 @@ export class WhatsappMessageHandler{
                let filteredImage= getMessageType(whatsappMessage);
                this.messageScheduler({
                 ...whatsappMessage,
+                to: this.to,
+                name: this.name,
                 agentType: filteredImage
             });
                 break;
@@ -46,6 +53,8 @@ export class WhatsappMessageHandler{
               let filteredAudio= getMessageType(whatsappMessage);
               this.messageScheduler({
                 ...whatsappMessage,
+                to: this.to,
+                name: this.name,
                 agentType: filteredAudio
             });
                 break;
@@ -53,6 +62,8 @@ export class WhatsappMessageHandler{
                let filteredVideo= getMessageType(whatsappMessage);
                this.messageScheduler({
                 ...whatsappMessage,
+                to: this.to,
+                name: this.name,
                 agentType: filteredVideo
             });
                 break;
@@ -60,6 +71,8 @@ export class WhatsappMessageHandler{
              let filteredDocument=   getMessageType(whatsappMessage);
                 this.messageScheduler({
                     ...whatsappMessage,
+                    to: this.to,
+                    name: this.name,
                     agentType: filteredDocument
                 });
                 break;
@@ -67,6 +80,8 @@ export class WhatsappMessageHandler{
                let filteredSticker= getMessageType(whatsappMessage);
                this.messageScheduler({
                 ...whatsappMessage,
+                to: this.to,
+                name: this.name,
                 agentType: filteredSticker
             });
                 break;
@@ -74,6 +89,8 @@ export class WhatsappMessageHandler{
                 let filteredReaction= getMessageType(whatsappMessage);
                 this.messageScheduler({
                     ...whatsappMessage,
+                    to: this.to,
+                    name: this.name,
                     agentType: filteredReaction
                 });
                 break;

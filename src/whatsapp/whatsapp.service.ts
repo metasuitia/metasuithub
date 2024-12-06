@@ -25,7 +25,13 @@ export class WhatsappService {
   const { changes } = entry[0];
   const { value } = changes[0];
   const { messages } = value;
-  const handler = new WhatsappMessageHandler(messages[0],this.client );
+  //numero al que envian el whatsapp
+  //sera siempre el bot pero lo dejo escrito 
+  const to = changes[0].value.metadata.display_phone_number
+  //nombre del remitente del mensaje el cliente
+  const name =changes[0].value.contacts[0].profile.name
+  
+  const handler = new WhatsappMessageHandler(messages[0],to ,name,this.client );
   handler.ClassifyMessage(messages[0]);
     return 'ok';
   }
