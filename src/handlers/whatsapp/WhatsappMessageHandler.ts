@@ -2,7 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { WorkingHours } from "src/functions";
 import { getMessageType } from "src/functions/classifyMessageType";
-import { Message } from "src/whatsapp/dto";
+import { Message, NewFilteredMessageDto } from "src/whatsapp/dto";
 
 
 @Injectable()
@@ -33,7 +33,7 @@ export class WhatsappMessageHandler{
             case 'text':
              const filteredMessage = getMessageType(whatsappMessage);
                 this.messageScheduler({
-                    ...whatsappMessage,
+                    whatsappMessage,
                     to: this.to,
                     name: this.name,
                     agentType: filteredMessage
@@ -42,7 +42,7 @@ export class WhatsappMessageHandler{
             case 'image':
                let filteredImage= getMessageType(whatsappMessage);
                this.messageScheduler({
-                ...whatsappMessage,
+                whatsappMessage,
                 to: this.to,
                 name: this.name,
                 agentType: filteredImage
@@ -51,7 +51,7 @@ export class WhatsappMessageHandler{
             case 'audio':
               let filteredAudio= getMessageType(whatsappMessage);
               this.messageScheduler({
-                ...whatsappMessage,
+                whatsappMessage,
                 to: this.to,
                 name: this.name,
                 agentType: filteredAudio
@@ -60,7 +60,7 @@ export class WhatsappMessageHandler{
             case 'video':
                let filteredVideo= getMessageType(whatsappMessage);
                this.messageScheduler({
-                ...whatsappMessage,
+                whatsappMessage,
                 to: this.to,
                 name: this.name,
                 agentType: filteredVideo
@@ -69,7 +69,7 @@ export class WhatsappMessageHandler{
             case 'document':
              let filteredDocument=   getMessageType(whatsappMessage);
                 this.messageScheduler({
-                    ...whatsappMessage,
+                    whatsappMessage,
                     to: this.to,
                     name: this.name,
                     agentType: filteredDocument
@@ -78,7 +78,7 @@ export class WhatsappMessageHandler{
             case 'sticker':
                let filteredSticker= getMessageType(whatsappMessage);
                this.messageScheduler({
-                ...whatsappMessage,
+                whatsappMessage,
                 to: this.to,
                 name: this.name,
                 agentType: filteredSticker
@@ -87,7 +87,7 @@ export class WhatsappMessageHandler{
             case 'reaction':
                 let filteredReaction= getMessageType(whatsappMessage);
                 this.messageScheduler({
-                    ...whatsappMessage,
+                    whatsappMessage,
                     to: this.to,
                     name: this.name,
                     agentType: filteredReaction
@@ -96,7 +96,7 @@ export class WhatsappMessageHandler{
         }
     }
 
-    messageScheduler(newfilteredMessage: any) {
+    messageScheduler(newfilteredMessage: NewFilteredMessageDto) {
          if (this.client) { 
             if (WorkingHours){
                 return this.client.emit('whatsapp.eventMessage', newfilteredMessage)}
